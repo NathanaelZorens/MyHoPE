@@ -81,16 +81,16 @@ def ShoData():
  def ResetAll(self):
   DefaultVeliyu(self)
   Deita.destroy()
-  Q1_Dep.rbc.set(0);Q2_Dep.rbc.set(0);Q3_Dep.rbc.set(0);Q4_Dep.rbc.set(0);Q5_Dep.rbc.set(0)
-  Q6_Dep.rbc.set(0);Q7_Dep.rbc.set(0);Q8_Dep.rbc.set(0);Q9_Dep.rbc.set(0)
-  Q1_Mot.rbc.set(0);Q2_Mot.rbc.set(0);Q3_Mot.rbc.set(0);Q4_Mot.rbc.set(0)
-  Q5_Mot.rbc.set(0);Q6_Mot.rbc.set(0);Q7_Mot.rbc.set(0);Q8_Mot.rbc.set(0)
+  Q1_Dep.rbc.set(-1);Q2_Dep.rbc.set(-1);Q3_Dep.rbc.set(-1);Q4_Dep.rbc.set(-1);Q5_Dep.rbc.set(-1)
+  Q6_Dep.rbc.set(-1);Q7_Dep.rbc.set(-1);Q8_Dep.rbc.set(-1);Q9_Dep.rbc.set(-1)
+  Q1_Mot.rbc.set(-1);Q2_Mot.rbc.set(-1);Q3_Mot.rbc.set(-1);Q4_Mot.rbc.set(-1)
+  Q5_Mot.rbc.set(-1);Q6_Mot.rbc.set(-1);Q7_Mot.rbc.set(-1);Q8_Mot.rbc.set(-1)
   Q1_Agr.dmc.set("No."+str(1));Q2_Agr.dmc.set("No."+str(2));Q3_Agr.dmc.set("No."+str(3));Q4_Agr.dmc.set("No."+str(4));Q5_Agr.dmc.set("No."+str(5))
   Q6_Agr.dmc.set("No."+str(6));Q7_Agr.dmc.set("No."+str(7));Q8_Agr.dmc.set("No."+str(8));Q9_Agr.dmc.set("No."+str(9));Q10_Agr.dmc.set("No."+str(10))
   Q11_Agr.dmc.set("No."+str(11));Q12_Agr.dmc.set("No."+str(12));Q13_Agr.dmc.set("No."+str(13));Q14_Agr.dmc.set("No."+str(14));Q15_Agr.dmc.set("No."+str(15))
   Q16_Agr.dmc.set("No."+str(16));Q17_Agr.dmc.set("No."+str(17));Q18_Agr.dmc.set("No."+str(18));Q19_Agr.dmc.set("No."+str(19));Q20_Agr.dmc.set("No."+str(20))
-  Q1_Pan.rbc.set(0);Q2_Pan.rbc.set(0);Q3_Pan.rbc.set(0);Q4_Pan.rbc.set(0);Q5_Pan.rbc.set(0)
-  Q6_Pan.rbc.set(0);Q7_Pan.rbc.set(0);Q8_Pan.rbc.set(0);Q9_Pan.rbc.set(0);Q10_Pan.rbc.set(0)
+  Q1_Pan.rbc.set(-1);Q2_Pan.rbc.set(-1);Q3_Pan.rbc.set(-1);Q4_Pan.rbc.set(-1);Q5_Pan.rbc.set(-1)
+  Q6_Pan.rbc.set(-1);Q7_Pan.rbc.set(-1);Q8_Pan.rbc.set(-1);Q9_Pan.rbc.set(-1);Q10_Pan.rbc.set(-1)
  
  Ok_B=Button(Deita,text="OK",command=Deita.destroy).grid(row=6,column=0)
  Res_B=Button(Deita,text="Reset",command=lambda: ResetAll(P1)).grid(row=6,column=1)
@@ -195,7 +195,9 @@ class DepSet:
      B_Dep.grid(row=r,column=1)
      C_Dep.grid(row=r,column=2)
      D_Dep.grid(row=r,column=3)
-     self.rbc.set(0)
+     self.rbc.set(-1)
+     
+     
 
   
 ExDep_L=Label(QDep_fr,text="Jawab dengan apa yang anda rasakan selama Seminggu ini.",padx=0,justify=LEFT).grid(row=0,column=0,columnspan=3,sticky=W)
@@ -219,7 +221,7 @@ Q9Dep_L=Label(QDep_fr,text="9.Berpikir lebih baik mati atau melukai diri sendiri
 Q9_Dep=DepSet(18)
 
 YoAns_Dep=[]
-def EnDep():
+def EnDep():  
  YoAns_Dep.clear()
  YoAns_Dep.append(Q1_Dep.rbc.get())
  YoAns_Dep.append(Q2_Dep.rbc.get())
@@ -235,7 +237,10 @@ def EnDep():
  for ag in range(len(YoAns_Dep)):
   l=l+YoAns_Dep[ag]  
  ag+=1
- P1.setDepLev(l)
+ if(l<0):
+  P1.setDepLev(0)
+ else: 
+  P1.setDepLev(l)
 
  messagebox.showinfo("Tingkat Depresi", "Nilai Tingkat Depresi anda "+str(P1.getDepLev())+"/27")
  
@@ -263,7 +268,7 @@ class MotSet:
      B_Mot.grid(row=r,column=1)
      C_Mot.grid(row=r,column=2)
      D_Mot.grid(row=r,column=3)
-     self.rbc.set(1)
+     self.rbc.set(-1)
      
   
 ExMot_L=Label(QMot_fr,text="Jawab dengan apa yang anda rasakan selama Seminggu ini.",padx=0,justify=LEFT).grid(row=0,column=0,columnspan=3,sticky=W)
@@ -300,8 +305,10 @@ def EnMot():
  for ag in range(len(YoAns_Mot)):
   l=l+YoAns_Mot[ag]  
  ag+=1
- P1.setMotLev(l)
-
+ if(l<0):
+  P1.setMotLev(0)
+ else: 
+  P1.setMotLev(l)
  messagebox.showinfo("Tingkat Harapan", "Nilai Tingkat Harapan dan Motivasi anda "+str(P1.getMotLev())+"/32")
  
 EnterMot_B=Button(QMot_fr,text="Submit",command=EnMot).grid(row=20,column=6)
@@ -441,6 +448,7 @@ class PanSet:
      C_Pan.grid(row=r,column=2)
      D_Pan.grid(row=r,column=3)
      E_Pan.grid(row=r,column=4)
+     self.rbc.set(-1)
 
 ExPan_L=Label(QPan_fr,text="Jawab dengan apa yang anda rasakan selama Seminggu ini.",padx=0,justify=LEFT).grid(row=0,column=0,columnspan=3,sticky=W)
 Q1Pan_L=Label(QPan_fr,text="1.Merasakan suatu ketakutan atau kengerian secara tiba-tiba tanpa sebab",padx=0,justify=LEFT).grid(row=1,column=0,columnspan=6,sticky=W)
@@ -482,7 +490,11 @@ def EnPan():
  for ag in range(len(YoAns_Pan)):
   l=l+YoAns_Pan[ag]  
  ag+=1
- P1.setPanLev(l)
+ if(l<0):
+  P1.setPanLev(0)
+ else: 
+  P1.setPanLev(l)
+ 
  messagebox.showinfo("Tingkat Panik", "Nilai Tingkat Kepanikan anda "+str(P1.getPanLev())+"/40")
  
 EnterPan_B=Button(QPan_fr,text="Submit",command=EnPan).grid(row=20,column=6)
